@@ -1,6 +1,6 @@
 // copyright Kristoffer Petersen 2020
-#include "Components/AudioComponent.h"
 #include "OpenDoor.h"
+#include "Components/AudioComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/PrimitiveComponent.h"
@@ -44,16 +44,6 @@ void UOpenDoor::BeginPlay()
 		CurrentPosX = InitialPosX;
 		TargetPositionX += InitialPosX;
 	}
-
-
-
-
-
-
-
-
-
-
 
 	IsPressurePlateSetOnActor();
 

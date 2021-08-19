@@ -3,23 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "Enemy_Shooter.generated.h"
+#include "MrBox/TopDownTanks/Pawns/PawnBase.h"
+#include "PawnTurret.generated.h"
 
-
-class AMrBoxCharacter;
-
+class APawnTank;
 UCLASS()
-class MRBOX_API AEnemy_Shooter : public APawn
+class MRBOX_API APawnTurret : public APawnsBase
 {
 	GENERATED_BODY()
-
-public:
-	// Sets default values for this pawn's properties
-	AEnemy_Shooter();
-
-
-
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CombatAI", meta = (AllowPrivateAccess = "true"))
@@ -28,25 +19,22 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CombatAI", meta = (AllowPrivateAccess = "true"))
 		float FireRange = 500.f;
 
-
-	AMrBoxCharacter* PlayerPawn;
+	APawnTank* PlayerPawn;
 	FTimerHandle FireRateTimerHandle;
-
 	void CheckFireCondition();
 
 	float ReturnDistanceToPlayer();
 
+
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void HandleDestruction() override;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 };
+

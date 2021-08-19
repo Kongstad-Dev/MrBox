@@ -1,18 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MrBox/CoffeeLevel/Projectile.h"
+#include "MrBox/TopDownTanks/ProjectileBase.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "particles/ParticleSystemComponent.h"
 
-AProjectile::AProjectile()
+// Sets default values
+AProjectileBase::AProjectileBase()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
+
+	RootComponent = ProjectileMesh;
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	ProjectileMovement->InitialSpeed = MovementSpeed;
@@ -25,17 +28,19 @@ AProjectile::AProjectile()
 }
 
 // Called when the game starts or when spawned
-void AProjectile::BeginPlay()
+void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 
 	UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
+	
+
 }
 
-void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	UE_LOG(LogTemp, Warning, TEXT("HIT"));
 	// Try to get a reference to the owning class.
 	AActor* MyOwner = GetOwner();
 	// If for some reason we can't get a valid reference, return as we need to check against the owner. 
@@ -52,6 +57,10 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(HitShake);
 		Destroy();
 	}
+
+
+
 }
+
 
 

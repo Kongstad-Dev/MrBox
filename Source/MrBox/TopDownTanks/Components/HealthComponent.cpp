@@ -1,16 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "HealthComponent.h"
-#include "MrBox/CoffeeLevel/HealthComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "MrBox/CoffeeLevel/CoffeeLevelGameModeBase.h"
 
+#include "MrBox/TopDownTanks/Components/HealthComponent.h"
+#include "MrBox/TopDownTanks/GameMode/TankGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -19,12 +18,12 @@ UHealthComponent::UHealthComponent()
 // Called when the game starts
 void UHealthComponent::BeginPlay()
 {
-	Super::BeginPlay();
 
+	Super::BeginPlay();
 	Health = DefaultHealth;
-	GameModeRef = Cast<ACoffeeLevelGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	GameModeRef = Cast<ATankGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::TakeDamage);
-	
+
 }
 
 
@@ -49,3 +48,5 @@ void UHealthComponent::TakeDamage(AActor* DmagedActor, float Damage, const UDama
 		}
 	}
 }
+
+

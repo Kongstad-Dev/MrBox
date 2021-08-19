@@ -6,10 +6,6 @@
 #include "GameFramework/Character.h"
 #include "MrBoxCharacter.generated.h"
 
-class UCapsuleComponent;
-class AProjectile;
-class UHealthComponent;
-
 UCLASS(config=Game)
 class AMrBoxCharacter : public ACharacter
 {
@@ -25,6 +21,7 @@ class AMrBoxCharacter : public ACharacter
 public:
 	AMrBoxCharacter();
 
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -32,22 +29,6 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
-
-
-
-protected:
-
-	void Fire();
-
-
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-		USceneComponent* ProjectileSpawnPoint;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ProjectileType", meta = (AllowPrivateAccess = "true"))
-		TSubclassOf<AProjectile> ProjectileClass;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
-		UHealthComponent* HealthComponent;
-
 
 protected:
 

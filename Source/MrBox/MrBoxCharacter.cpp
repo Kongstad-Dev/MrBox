@@ -1,8 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MrBoxCharacter.h"
-#include "MrBox/CoffeeLevel/Projectile.h"
-#include "MrBox/CoffeeLevel/HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
@@ -77,6 +75,8 @@ void AMrBoxCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInp
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AMrBoxCharacter::OnResetVR);
+	
+	
 }
 
 
@@ -142,22 +142,7 @@ void AMrBoxCharacter::MoveRight(float Value)
 	}
 }
 
-void AMrBoxCharacter::Fire()
-{
 
-	//Get ProjectileSpawn Location + Rotation -> Spawn projectile class at locatiuon of firing towards the rotation.
-	if (ProjectileClass)
-	{
-		FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
-		FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
-		AProjectile* TempProjectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
-		TempProjectile->SetOwner(this);
-	}
-}
 
-/*
-void AMrBoxCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AMrBoxCharacter::Fire);
-}
-*/
+
+
